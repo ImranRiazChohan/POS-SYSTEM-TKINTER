@@ -36,6 +36,8 @@ class MenuFORM:
         self.Other1 = IntVar()
         self.Other2 = IntVar()
         self.Other3 = IntVar()
+
+        self.drinkList=[]
     def Menu(self):
         self.title_label=Label(self.root,text="CALIFORNIA POS SYSTEM",bg="red",relief=GROOVE,fg="white",font=("times new roman",30,'bold'),pady=20).pack(fill=X)
         #********************PIZZA DETAIL****************************)
@@ -151,7 +153,7 @@ class MenuFORM:
         self.Logout_button = Button(self.Button_Frame, command=self.logout,text="LogOut", font=("times new roman", 14, 'bold'), width=11,relief=SUNKEN).place(x=520,y=40,width=100,height=60)
         self.Size_lable=Label(self.Button_Frame,text="Size",bg="black",fg="white",font=("times new roma",16,"bold"),relief=GROOVE).place(x=750,y=40,width=150,height=20)
         self.Size_Combox=ttk.Combobox(self.Button_Frame,width=20)
-        self.Size_Combox["values"]=("small","larger","pan","regular","jumbo")
+        self.Size_Combox["values"]=("small","larger","pan","regular","jumbo","1.5 ml","345 ml","2.15 ml")
         self.Size_Combox.place(x=920,y=40,width=150,height=20)
         self.Reciept_button=Button(self.Button_Frame,command=self.GenerateBill,text="Reciept",font=("times new roman", 14, 'bold'), width=11, relief=SUNKEN).place(x=750,y=70,width=150,height=40)
 
@@ -204,6 +206,7 @@ class MenuFORM:
         self.Pizza9.set(0)
         self.Pizza10.set(0)
         self.total.set(0)
+        self.Reciept_text.delete("1.0",END)
     def Update(self):
         pass
     def logout(self):
@@ -224,29 +227,126 @@ class MenuFORM:
         if self.deal6.get()!=0:
             self.Reciept_text.insert(END,f"\nDeal6\t   {self.deals['deal6']['price'] }\t    {self.deal6.get()}\t\t{self.d6_p}")
 
-        # if self.Drink1.get()!=0:
-        #     self.Reciept_text.insert(END,f"\n{self.Drinks['Drink1']['Name']}\t   {self.Drinks['Drink1']['price']}\t    {self.Drink1.get()}\t\t{self.dr1_p}")
-        # if self.Drink2.get()!=0:
-        #     self.Reciept_text.insert(END,f"\n{self.Drinks['Drink2']['Name']}\t   {self.Drinks['Drink2']['price']}\t    {self.Drink2.get()}\t\t{self.dr2_p}")
-        # if self.Drink3.get()!=0:
-        #     self.Reciept_text.insert(END,f"\n{self.Drinks['Drink3']['Name']}\t   {self.Drinks['Drink3']['price']}\t    {self.Drink3.get()}\t\t{self.dr3_p}")
-        # if self.Drink4.get()!=0:
-        #     self.Reciept_text.insert(END,f"\n{self.Drinks['Drink4']['Name']}\t   {self.Drinks['Drink4']['price']}\t    {self.Drink4.get()}\t\t{self.dr4_p}")
-        # if self.Drink5.get()!=0:
-        #     self.Reciept_text.insert(END,f"\n{self.Drinks['Drink5']['Name']}\t   {self.Drinks['Drink5']['price']}\t    {self.Drink5.get()}\t\t{self.dr5_p}")
-        # if self.Drink6.get()!=0:
-        #     self.Reciept_text.insert(END,f"\n{self.Drinks['Drink6']['Name']}\t   {self.Drinks['Drink6']['price']}\t    {self.Drink6.get()}\t\t{self.dr6_p}")
+        if self.Drink1.get()!=0:
+            if self.Drink1_combox.get() == "345 ml":
+                self.dr1_p = int(self.Drink1.get() * 50)
+                self.Reciept_text.insert(END,f"\n{self.Drinks['Drink1']['Name']}\t   {self.Size['345 ml']['Price']}\t    {self.Drink1.get()}\t\t{self.dr1_p}")
+                # self.drinkList.append((self.dr1_p))
 
-        if self.Other1.get()!=0:
-            self.Reciept_text.insert(END,f"\n{self.Others['Other1']['Name']}\t   {self.Others['Other1']['Price']}\t    {self.Other1.get()}\t\t{self.o1_p}")
-        if self.Other2.get()!=0:
-            self.Reciept_text.insert(END,f"\nD{self.Others['Other2']['Name']}\t   {self.Others['Other2']['Price']}\t   {self.Other2.get()}\t\t{self.o2_p}")
-        if self.Other3.get()!=0:
-            self.Reciept_text.insert(END,f"\n{self.Others['Other3']['Name']}\t   {self.Others['Other3']['Price']}\t    {self.Other3.get()}\t\t{self.o3_p}")
+            elif self.Drink1_combox.get()=="2.15 ml":
+                self.dr1_p = int(self.Drink1.get() * 160)
+                self.Reciept_text.insert(END,f"\n{self.Drinks['Drink1']['Name']}\t   {self.Size['2.15 ml']['Price']}\t    {self.Drink1.get()}\t\t{self.dr1_p}")
+                # self.drinkList.append(self.dr1_p)
+
+            elif self.Drink1_combox.get()=="1.5 ml":
+                self.dr1_p = int(self.Drink1.get() * 90)
+                self.Reciept_text.insert(END,f"\n{self.Drinks['Drink1']['Name']}\t   {self.Size['1.5 ml']['Price']}\t    {self.Drink1.get()}\t\t{self.dr1_p}")
+                # self.drinkList.append((self.dr1_p))
+            else:
+                self.dr1_p = int(self.Drink1.get() * 0)
+
+        #
+        if self.Drink2.get() != 0:
+            if self.Drink2_combox.get()=="345 ml":
+                self.dr2_p = int(self.Drink2.get() * 50)
+                self.Reciept_text.insert(END,f"\n{self.Drinks['Drink2']['Name']}\t   {self.Size['345 ml']['Price']}\t    {self.Drink2.get()}\t\t{self.dr2_p}")
+                # self.drinkList.append((self.dr2_p))
+
+            elif self.Drink2_combox.get()=="2.15 ml":
+                self.dr2_p = int(self.Drink2.get() * 160)
+                self.Reciept_text.insert(END,f"\n{self.Drinks['Drink2']['Name']}\t   {self.Size['2.15 ml']['Price']}\t    {self.Drink2.get()}\t\t{self.dr2_p}")
+                # self.drinkList.append((self.dr2_p))
+            elif self.Drink2_combox.get()=="1.5 ml":
+                self.dr2_p = int(self.Drink2.get() * 90)
+                self.Reciept_text.insert(END,f"\n{self.Drinks['Drink2']['Name']}\t   {self.Size['1.5 ml']['Price']}\t    {self.Drink2.get()}\t\t{self.dr2_p}")
+                # self.drinkList.append((self.dr2_p))
+            else:
+                self.dr2_p = int(self.Drink2.get() * 0)
+        self.dl=[self.dr1_p+self.dr2_p]
+        print(self.dl)
+        # if self.Drink3.get() != 0:
+        #     if self.Drink3_combox.get()=="2.15 ml":
+        #         self.dr3_p = int(self.Drink3.get() * 160)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink3']['Name']}\t   {self.Size['2.15 ml']['Price']}\t    {self.Drink3.get()}\t\t{self.dr3_p}")
+        #         self.drinkList.append(self.dr3_p)
+        #
+        #     elif self.Drink3_combox.get()=="1.5 ml":
+        #         self.dr3_p = int(self.Drink3.get() * 90)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink3']['Name']}\t   {self.Size['1.5 ml']['Price']}\t    {self.Drink3.get()}\t\t{self.dr3_p}")
+        #         self.drinkList.append(self.dr3_p)
+        #
+        #     elif self.Drink3_combox.get()=="345 ml":
+        #         self.dr3_p = int(self.Drink3.get() * 50)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink3']['Name']}\t   {self.Size['345 ml']['Price']}\t    {self.Drink3.get()}\t\t{self.dr3_p}")
+        #         self.drinkList.append(self.dr3_p)
+        #     else:
+        #         self.dr1_p = int(self.Drink3.get() * 0)
+        #
+        # if self.Drink4.get()!=0:
+        #     if self.Drink4_combox.get()=="2.15 ml":
+        #         self.dr4_p = int(self.Drink4.get() * 160)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink4']['Name']}\t   {self.Size['2.15 ml']['Price']}\t    {self.Drink4.get()}\t\t{self.dr4_p}")
+        #         self.drinkList.append(self.dr4_p)
+        #
+        #     elif self.Drink4_combox.get()=="345 ml":
+        #         self.dr4_p = int(self.Drink4.get() * 50)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink4']['Name']}\t   {self.Size['345 ml']['Price']}\t    {self.Drink4.get()}\t\t{self.dr4_p}")
+        #         self.drinkList.append(self.dr4_p)
+        #
+        #     elif self.Drink4_combox.get()=="1.5 ml":
+        #         self.dr4_p = int(self.Drink4.get() * 90)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink4']['Name']}\t   {self.Size['1.5 ml']['Price']}\t    {self.Drink4.get()}\t\t{self.dr4_p}")
+        #         self.drinkList.append(self.dr4_p)
+        #     else:
+        #         self.dr1_p = int(self.Drink4.get() * 0)
+        # if self.Drink5.get()!=0:
+        #     if self.Drink5_combox.get()=="345 ml":
+        #         self.dr5_p = int(self.Drink5.get() * 50)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink5']['Name']}\t   {self.Size['345 ml']['Price']}\t    {self.Drink5.get()}\t\t{self.dr5_p}")
+        #         self.drinkList.append(self.Drink5)
+        #
+        #     elif self.Drink5_combox.get()=="2.15 ml":
+        #         self.dr5_p = int(self.Drink5.get() * 160)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink5']['Name']}\t   {self.Size['2.15 ml']['Price']}\t    {self.Drink5.get()}\t\t{self.dr5_p}")
+        #         self.drinkList.append(self.Drink5)
+        #
+        #     elif self.Drink5_combox.get()=="1.5 ml":
+        #         self.dr5_p = int(self.Drink5.get() * 90)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink5']['Name']}\t   {self.Size['1.5 ml']['Price']}\t    {self.Drink5.get()}\t\t{self.dr5_p}")
+        #         self.drinkList.append(self.Drink5)
+        #     else:
+        #         self.dr1_p = int(self.Drink5.get() * 0)
+        #
+        # if self.Drink6.get()!=0:
+        #     if self.Drink6_combox.get()=="345 ml":
+        #         self.dr6_p = int(self.Drink6.get() * 50)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink6']['Name']}\t   {self.Size['345 ml']['Price']}\t    {self.Drink6.get()}\t\t{self.dr6_p}")
+        #         self.drinkList.append(self.Drink6)
+        #
+        #     elif self.Drink6_combox.get()=="2.15 ml":
+        #         self.dr6_p = int(self.Drink6.get() * 160)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink6']['Name']}\t   {self.Size['2.15 ml']['Price']}\t    {self.Drink6.get()}\t\t{self.dr6_p}")
+        #         self.drinkList.append(self.Drink6)
+        #
+        #     elif self.Drink6_combox.get()=="1.5 ml":
+        #         self.dr6_p = int(self.Drink6.get() * 90)
+        #         self.Reciept_text.insert(END,f"\n{self.Drinks['Drink6']['Name']}\t   {self.Size['1.5 ml']['Price']}\t    {self.Drink6.get()}\t\t{self.dr6_p}")
+        #         self.drinkList.append(self.Drink6)
+        #     else:
+        #         self.dr1_p = int(self.Drink6.get() * 0)
+        #
+        #
+        # if self.Other1.get()!=0:
+        #     self.Reciept_text.insert(END,f"\n{self.Others['Other1']['Name']}\t   {self.Others['Other1']['Price']}\t    {self.Other1.get()}\t\t{self.o1_p}")
+        # if self.Other2.get()!=0:
+        #     self.Reciept_text.insert(END,f"\nD{self.Others['Other2']['Name']}\t   {self.Others['Other2']['Price']}\t   {self.Other2.get()}\t\t{self.o2_p}")
+        # if self.Other3.get()!=0:
+        #     self.Reciept_text.insert(END,f"\n{self.Others['Other3']['Name']}\t   {self.Others['Other3']['Price']}\t    {self.Other3.get()}\t\t{self.o3_p}")
 
         # if self.Pizza1.get()!=0:
+        #     if self.Drink.get()!=0:
         #     self.Reciept_text.insert(END,f"\n{self.Pizzas['pizza1']['name']} \t   {self.Pizzas['pizza1']['price'] }\t    {self.Pizza1.get()}\t\t{self.p1_p}")
-        # if self.Pizza2.get()!=0:
+        # # if self.Pizza2.get()!=0:
         #     self.Reciept_text.insert(END,f"\n{self.Pizzas['pizza1']['name']}\t   {self.Pizzas['pizza2']['price'] }\t    {self.Pizza2.get()}\t\t{self.p2_p}")
         # if self.Pizza3.get()!=0:
         #     self.Reciept_text.insert(END,f"\n{self.Pizzas['pizza1']['name']}\t   {self.Pizzas['pizza3']['price'] }\t    {self.Pizza3.get()}\t\t{self.p3_p}")
@@ -274,23 +374,24 @@ class MenuFORM:
                         "deal6":{"price":3449,"Detail":"2LargePizza & 5Drink(345ml)"}}
 
 
-        # self.Drinks={"Drink1":{"Price":100,"Name":"Sevenup"},
-        #                 "Drink2":{"Price":100,"Name":"Pepsi"},
-        #                 "Drink3":{"Price":100,"Name":"Dew"},
-        #                 "Drink4":{"Price":100,"Name":"Marinda"},
-        #                 "Drink5":{"Price":100,"Name":"Coke"},
-        #                 "Drink6":{"Price":100,"Name":"Sprite"}}
+        self.Drinks={"Drink1":{"Name":"Sevenup"},
+                        "Drink2":{"Name":"Pepsi"},
+                        "Drink3":{"Name":"Dew"},
+                        "Drink4":{"Name":"Marinda"},
+                        "Drink5":{"Name":"Coke"},
+                        "Drink6":{"Name":"Sprite"}}
 
         self.Others={"Other1":{"Price":300,"Name":"Salad"},
                          "Other2":{"Price":500,"Name":"LasagnaPast"},
                          "Other3":{"Price":700,"Name":"ChickenTikka"}}
 
-        # self.Size={"large":{"Price":1500},
-        #                  "regular":{"Price":500},
-        #                  "jumbo":{"Price":1800},
-        #                  "345ml": {"Price": 50},
-        #                  "1.5ml": {"Price": 90},
-        #                  "2.15ml": {"Price": 160}}
+        self.Size={"large":{"Price":1500},
+                         "regular":{"Price":500},
+                         "jumbo":{"Price":1800},
+                         "345 ml": {"Price": 50},
+                         "1.5 ml": {"Price": 90},
+                         "2.15 ml": {"Price": 160}}
+
 
         self.d1_p=self.deal1.get()*self.deals["deal1"]["price"]
         self.d2_p=self.deal2.get()*self.deals["deal2"]["price"]
@@ -304,8 +405,7 @@ class MenuFORM:
         self.o3_p = self.Other3.get() * self.Others["Other3"]["Price"]
 
         self.total_others=float(self.o1_p+self.o2_p+self.o3_p)
-        self.total_deals=float(self.d1_p+self.d2_p+self.d3_p+self.d4_p+self.d5_p+self.d6_p)
-
+        self.total_deals=float(self.d1_p+self.d2_p)
         self.grand_total=float(self.total_deals+self.total_others)
         self.total.set("Rs: "+str(self.grand_total))
 
