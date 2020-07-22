@@ -15,9 +15,6 @@ class Login:
         self.LoginButton=ttk.Button(self.Login_frame,text="Login",command=self.Clicked).place(x=60,y=200)
         self.CancelButton=ttk.Button(self.Login_frame,text="Cancle",command=self.Cancel).place(x=170,y=200)
     def Clicked(self):
-        # if self.UserPass_Entry_v.get()=="usama" and self.UserName_Entry_v.get()=="usama":
-        #elif self.UserPass_Entry_v.get()=="usama" and self.UserName_Entry_v.get()=="usama":
-        #else:
         pass
     def Cancel(self):
         self.root.quit()
