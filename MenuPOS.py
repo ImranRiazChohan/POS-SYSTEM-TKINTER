@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import  ttk
 import random
 from datetime import datetime
+from DataBase import  SalesDataBase
 class MenuFORM:
     def __init__(self,root):
         self.root=root
@@ -37,8 +38,10 @@ class MenuFORM:
         self.Other1 = IntVar()
         self.Other2 = IntVar()
         self.Other3 = IntVar()
+        self.s1 = SalesDataBase()
 
     def Menu(self):
+        self.obj=Login()
         self.title_label=Label(self.root,text="CALIFORNIA POS SYSTEM",bg="red",relief=GROOVE,fg="white",font=("times new roman",30,'bold'),pady=20).pack(fill=X)
         #********************PIZZA DETAIL****************************)
         self.Pizza_Frame=LabelFrame(self.root,text="Pizza",bg="yellow",relief=GROOVE,font=("times new roman",20,'bold'))
@@ -158,11 +161,11 @@ class MenuFORM:
         self.Reciept_button=Button(self.Button_Frame,command=self.GenerateBill,text="Reciept",font=("times new roman", 14, 'bold'), width=11, relief=SUNKEN).place(x=750,y=70,width=150,height=40)
 
         self.casheirNameLabel=Label(self.Button_Frame,text="ChasierName",bg="black",fg="white",font=("times new roma",16,"bold"),relief=GROOVE).place(x=1080,y=40,width=160,height=20)
-        self.casheirNameEntry = Label(self.Button_Frame,text="Name",font=("times new roman", 14, 'bold'), width=11, relief=SUNKEN).place(x=1250,y=40,width=150,height=20)
+        self.casheirNameEntry = Label(self.Button_Frame,textvariable="",font=("times new roman", 14, 'bold'), width=11, relief=SUNKEN).place(x=1250,y=40,width=150,height=20)
         self.casheirIDLabel=Label(self.Button_Frame,text="CashierID",bg="black",fg="white",font=("times new roma",16,"bold"),relief=GROOVE).place(x=1080,y=70,width=160,height=20)
-        self.casheirIDEntry = Label(self.Button_Frame,text="ID",font=("times new roman", 14, 'bold'), width=11, relief=SUNKEN).place(x=1250,y=70,width=150,height=20)
+        self.casheirIDEntry = Label(self.Button_Frame,textvariable="",font=("times new roman", 14, 'bold'), width=11, relief=SUNKEN).place(x=1250,y=70,width=150,height=20)
         self.casheirEmailLabel=Label(self.Button_Frame,text="CashierEmail",bg="black",fg="white",font=("times new roma",16,"bold"),relief=GROOVE).place(x=1080,y=100,width=160,height=20)
-        self.casheirEmailEntry = Label(self.Button_Frame,text="Email",font=("times new roman", 14, 'bold'), width=11, relief=SUNKEN).place(x=1250,y=100,width=150,height=20)
+        self.casheirEmailEntry = Label(self.Button_Frame,textvariable="",font=("times new roman", 14, 'bold'), width=11, relief=SUNKEN).place(x=1250,y=100,width=150,height=20)
         self.total=IntVar()
         self.TotalLabel=Label(self.Button_Frame,textvariable=self.total,bg="white",fg="green",font=("times new roma",16,"bold"), width=11, relief=FLAT).place(x=920,y=70,width=150,height=40)
     def RecieptGenerate_title(self):
@@ -171,7 +174,7 @@ class MenuFORM:
         self.Reciept_text.delete("1.0",END)
         self.Reciept_text.insert(END,"\tSale Reciept")
         self.Reciept_text.insert(END, "\nCashier Name:")
-        self.Reciept_text.insert(END, f"\nToken No:{self.tokenNo}")
+        self.Reciept_text.insert(END, f"\nInvoice #:{self.tokenNo}")
         self.Reciept_text.insert(END, f"\nInvDate:{self.date}")
         self.Reciept_text.insert(END, "\nCostumer Name:Mr.Walking Costumer")
         self.Reciept_text.insert(END, "\n*************************************")
@@ -208,7 +211,6 @@ class MenuFORM:
         self.Pizza9.set(0)
         self.Pizza10.set(0)
         self.total.set(0)
-        self.Reciept_text.delete("1.0",END)
     def Update(self):
         pass
     def logout(self):
@@ -238,6 +240,10 @@ class MenuFORM:
             self.Reciept_text.insert(END,f"\n{self.Others['Other3']['Name']}\t   {self.Others['Other3']['Price']}\t    {self.Other3.get()}\t\t{self.o3_p}")
 
         self.Reciept_text.insert(END,f"\n\nTotal\t\t{self.grand_total}\nSales Tax\t\t{self.SalesTax}\nNet Amount\t\t{self.totals}")
+        self.Clean()
+        self.detail_tuple = (self.tokenNo,self.date, self.totals)
+
+        self.s1.Insert(self.detail_tuple[0],self.detail_tuple[2],self.detail_tuple[1])
     def total_(self):
 
         self.deals = {"deal1": {"price": 349, "Detail": "6Inch PIzza & Cold Drink(345ml)"},
@@ -285,8 +291,19 @@ class MenuFORM:
 
 
 
-if __name__=="__main__":
-    root=tk.Tk()
-    menu=MenuFORM(root)
-    menu.Menu()
-    root.mainloop()
+class MenuPos(MenuFORM):
+    def __init__(self):
+        root=tk.Tk()
+        ob1=MenuFORM(root)
+        ob1.Menu()
+        root.mainloop()
+
+
+
+
+# if __name__=="__main__":
+#     # root=tk.Tk()
+#     # menu=MenuFORM(root)
+#     # menu.Menu()
+#     # root.mainloop()
+# obj1=MenuPos()
