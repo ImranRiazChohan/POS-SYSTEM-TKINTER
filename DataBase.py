@@ -57,71 +57,70 @@ class CashierDataBase(DataBase):
         try:
             self.curObj.execute("Update cashierInfo set CashierName=? where CashierID=?" ,(Cashier_Name,Cashier_ID))
             self.con.commit()
-            self.curObj.close()
+            # self.curObj.close()
         except Error:
             print(Error)
         finally:
             if self.con:
-                self.con.close()
+                # self.con.close()
+                self.curObj.close()
                 print("The Value is UpDate it")
     def Delete(self,Cashier_ID):
         try:
             self.con.execute("DELETE from cashierInfo where CashierID=?",(Cashier_ID,))
             self.con.commit()
-            self.curObj.close()
+            # self.con.close()
         except Error:
             print(Error)
         finally:
             if self.con:
-                self.con.close()
+                # self.con.close()
+                self.curObj.close()
                 print("The Entity is Deleted")
     def Insert(self,CashirName,Cashier_ID,Cashier_Email):
         try:
             self.curObj.execute("INSERT INTO cashierInfo (CashierName,CashierEmail,CashierID) VALUES (?,?,?)",(CashirName,Cashier_Email,Cashier_ID))
             self.con.commit()
-            self.curObj.close()
+            # self.curObj.close()
         except Error:
             print(Error)
         finally:
             if self.con:
-                self.con.close()
+                # self.con.close()
+                self.curObj.close()
                 print("Connection is closed")
 
     def FetchAll(self):
         try:
             self.curObj.execute("select * from CashierInfo")
             self.result=self.curObj.fetchall()
-            for row in self.result:
-                pass
-            return self.result
+            for r in self.result:
+                print("CashierName",r[0])
+                print(("CashierEmail",r[1]))
+                print("CashierId",r[2])
+                print("\n")
+            # self.curObj.close()
         except Error:
             print(Error)
         finally:
             if self.con:
-                self.con.close()
+                # self.con.close()
+                self.curObj.close()
                 print("All Connection is Closed")
+            return self.result
     def FetchOne(self,CashierID):
         try:
-            self.curObj.execute("select *"+" from CashierInfo where CashierID=? ",(CashierID))
-            self.result=self.curObj.fetchone()
-            return self.result
+            self.curObj.execute("select *from CashierInfo where CashierID=? ",(CashierID))
+            self.con.commit()
+            # self.curObj.close()
+            # return self.curObj
         except Error:
             print(Error)
         finally:
             if self.con:
-                self.con.close()
+                # self.con.close()
+                self.curObj.close()
                 print("All Connection is Closed")
-    # def auth(self,uname,upass):
-    #     try:
-    #         self.curObj.execute("select *from CashierInfo Where CashierName=? and CashierId=?",(uname,upass))
-    #         self.con.commit()
-    #         self.curObj.close()
-    #     except Error:
-    #         print(Error)
-    #     finally:
-    #         if self.con:
-    #             self.con.close()
-    #             print("Connection is closed")
 
 class SalesDataBase(DataBase):
     def __init__(self):
@@ -138,14 +137,14 @@ class SalesDataBase(DataBase):
         try:
             self.curObj.execute("INSERT INTO saleInfo (RecieptNo,TotalAmount,Date) VALUES (?,?,?)",(Reciept_No,Total_amount,Date))
             self.con.commit()
-            self.curObj.close()
-
+            # self.curObj.close()
         except Error:
             print(Error)
 
         finally:
             if self.con:
-                self.con.close()
+                # self.con.close()
+                self.curObj.close()
             print("Connection is closed")
     def FetchAll(self):
         try:
@@ -157,13 +156,16 @@ class SalesDataBase(DataBase):
                 print("TotalAmount:",row[1])
                 print("Date:",row[2])
                 print("\n")
+            # self.curObj.close()
         except Error:
             print(Error)
         finally:
             if self.con:
-                self.con.close()
+                # self.con.close()
+                self.curObj.close()
                 print("All Connection is Closed")
         return self.result
 
-
+# obj1=SalesDataBase()
+# obj1.FetchAll()
 

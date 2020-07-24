@@ -27,12 +27,12 @@ class Login:
             self.root.destroy()
             obj1=Manager()
 
-        elif self.q.curObj.execute("select *from CashierInfo Where CashierName=? and CashierId=?",(self.UserName_Entry_v.get(), self.UserPass_Entry_v.get())):
+        elif self.q.curObj.execute("select *from CashierInfo Where CashierName=? and CashierId=?",(self.UserName_Entry_v.get(), self.UserPass_Entry_v.get()))==1:
             self.root.destroy()
             obj2=MenuPos()
 
-        else:
-            tk.messagebox.showinfo("Error","Please Enter a Correct Detail")
+        elif self.UserPass_Entry_v.get()=="" or self.UserName_Entry_v.get():
+                tk.messagebox.showinfo("Error","Please Enter a Correct Detail")
 
 
 
@@ -46,8 +46,8 @@ class LOGIN(Login):
         obj = Login(root)
         obj.LoginFOrm()
         root.mainloop()
-
-if __name__=="__main__":
+#
+# if __name__=="__main__":
     #
     # root = tk.Tk()
     # root.geometry("300x300")
@@ -55,4 +55,4 @@ if __name__=="__main__":
     # obj = Login(root)
     # obj.LoginFOrm()
     # root.mainloop()
-    l1=LOGIN()
+    # l1=LOGIN()
