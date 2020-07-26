@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from DataBase import *
+# from LoginPage import LOGIN
 from MenuPOS import MenuPos
 class ManagerPage(CashierDataBase,SalesDataBase):
     # obj1=CashierDataBase()
@@ -71,9 +72,6 @@ class ManagerPage(CashierDataBase,SalesDataBase):
 
     def ShowSale(self):
         self.sallbuttton = Button(self.showdata_frame, text="SaleInformation", font=("times new roman", 10, 'italic bold'),relief=FLAT, bg="grey",command=self.All_DataS).place(x=900, y=730, height=60, width=100)
-        # self.sallbuttton = Button(self.showdata_frame, text="SaleInformation",font=("times new roman", 10, 'italic bold'), relief=FLAT, bg="grey")
-        # self.sallbuttton.bind("<Button-1>",self.All_DataS)
-        # self.sallbutton.place(x=900, y=730, height=60, width=100)
         self.SaleForm=ttk.Treeview(self.showdata_frame)
         self.SaleForm.place(x=201, y=0, height=699, width=800)
         self.SaleForm["columns"]=("one","two","three","four")
@@ -115,12 +113,13 @@ class ManagerPage(CashierDataBase,SalesDataBase):
 
     def onlyone_Data(self):
         self.ShowCashier()
-        a=self.obj1.FetchOne(self.Search)
+        a=self.obj1.FetchOne(self.Search.get())
         for r in a:
             print(r)
-            self.CashierForm.insert("",tk.END,value=r)
+            self.CashierForm.insert("",tk.END,values=r)
     def logout(self):
         self.root.quit()
+        # ob1=LOGIN()
 class Manager:
     def __init__(self):
         root=tk.Tk()
@@ -133,4 +132,4 @@ class Manager:
 #     # obj=ManagerPage(root)
 #     # obj.Form()
 #     # root.mainloop()
-obj=Manager()
+# obj=Manager()

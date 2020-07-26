@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 from DataBase import *
-from MenuPOS import MenuPos
+from MenuPOS import MenuPos,MenuFORM
 from Manager import Manager
 from DataBase import CashierDataBase,SalesDataBase
-from  tkinter import  messagebox
+from tkinter import messagebox
 class Login:
     def __init__(self,root):
         self.root=root
@@ -27,17 +27,37 @@ class Login:
             self.root.destroy()
             obj1=Manager()
 
-        elif self.q.curObj.execute("select *from CashierInfo Where CashierName=? and CashierId=?",(self.UserName_Entry_v.get(), self.UserPass_Entry_v.get()))==1:
+        elif self.q.curObj.execute("select *from CashierInfo Where CashierName=? and CashierId=?",(self.UserName_Entry_v.get(), self.UserPass_Entry_v.get()),):
             self.root.destroy()
             obj2=MenuPos()
+            # self.CashierInfo(self.UserPass_Entry_v.get())
 
-        elif self.UserPass_Entry_v.get()=="" or self.UserName_Entry_v.get():
-                tk.messagebox.showinfo("Error","Please Enter a Correct Detail")
+        elif self.UserPass_Entry_v.get()=="" and self.UserName_Entry_v.get()=="":
+                messagebox.showinfo("Error","Please Enter a Correct Detail")
+
+
+    def CashierInfo(self,ids):
+        id = self.obj.casheirIDEntry_
+        email =self.obj.casheirEmailEntry_
+        name =self.obj.casheirNameEntry_
+
+        result=self.q.curObj.execute("select *from CashierInfo where CashierID=? ", (ids,))
+        self.cashierDetail=[]
+        for r in result:
+            # print("name:".format(r[2]))
+            # print("Id:".format(r[1]))
+            # print("Email".format(r[3]))
+            self.cashierDetail.append(result[r])
+        return self.cashierDetail
 
 
 
+        self.q.curObj.commit()
     def Cancel(self):
         self.root.quit()
+    # def CashierInfo(self):
+
+
 class LOGIN(Login):
     def __init__(self):
         root = tk.Tk()
@@ -55,4 +75,4 @@ class LOGIN(Login):
     # obj = Login(root)
     # obj.LoginFOrm()
     # root.mainloop()
-    # l1=LOGIN()
+# l1=LOGIN()
